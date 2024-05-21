@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
 import { NotAuthorizedError } from "../errors/not-authorized-error";
 
 interface UserPayload {
@@ -15,24 +14,14 @@ declare global {
   }
 }
 
-export const currentUser = (
+export const requireAuth = (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  if (!req.session?.jwt) {
+  if (!req.currentUser) {
     throw new NotAuthorizedError();
   }
 
-  try {
-    const payload = jwt.verify(
-      req.session.jwt,
-      process.env.JWT_KEY!,
-    ) as UserPayload;
-
-    req.currentUser = payload;
-  } catch (err) {
-  } finally {
-    next();
-  }
+  next();
 };
