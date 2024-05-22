@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import { NotAuthorizedError } from "../errors/not-authorized-error";
 
 interface UserPayload {
   id: string;
@@ -21,7 +20,7 @@ export const currentUser = (
   next: NextFunction,
 ) => {
   if (!req.session?.jwt) {
-    throw new NotAuthorizedError();
+    return next();
   }
 
   try {
