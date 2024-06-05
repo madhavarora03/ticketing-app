@@ -1,8 +1,14 @@
 import "bootstrap/dist/css/bootstrap.css";
 import buildClient from "../api/build-client";
+import Header from "../components/header";
 
 function AppComponent({ Component, pageProps, currentUser }) {
-  return <Component {...pageProps} />;
+  return (
+    <div>
+      <Header currentUser={currentUser} />
+      <Component {...pageProps} />
+    </div>
+  );
 }
 
 AppComponent.getInitialProps = async (appContext) => {
