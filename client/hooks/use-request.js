@@ -13,6 +13,7 @@ export default function useRequest({ url, method, body, onSuccess }) {
       }
       return res.data;
     } catch (error) {
+      console.log(error);
       setErrors(
         <div className="alert alert-danger">
           <h4>Oops...</h4>
